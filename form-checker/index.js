@@ -1,3 +1,4 @@
+const form = document.querySelector("form");
 const inputs = document.querySelectorAll(
   'input[type="text"], input[type="password"]'
 );
@@ -10,10 +11,14 @@ const errorDisplay = (tag, message, valid) => {
   const span = document.querySelector(`.${tag}-container > span`);
 
   if (valid) {
+    // @ts-ignore
     container.classList.remove("error");
+    // @ts-ignore
     span.textContent = message;
   } else {
+    // @ts-ignore
     container.classList.add("error");
+    // @ts-ignore
     span.textContent = message;
   }
 };
@@ -56,17 +61,24 @@ const passwordChecker = (value) => {
       "Minimum 8 caractères avec une minuscule, une majuscule, un chiffre et un caractère spécial",
       false
     );
+    // @ts-ignore
     progressBar.classList.add("progressRed");
+    // @ts-ignore
     progressBar.classList.remove("progressBlue");
+    // @ts-ignore
     progressBar.classList.remove("progressGreen");
     password = null;
   } else if (value.length < 12) {
+    // @ts-ignore
     progressBar.classList.add("progressRed");
+    // @ts-ignore
     progressBar.classList.remove("progressGreen");
+    // @ts-ignore
     progressBar.classList.add("progressBlue");
     errorDisplay("password", "", true);
     password = value;
   } else {
+    // @ts-ignore
     progressBar.classList.add("progressGreen");
     errorDisplay("password", "", true);
     password = value;
@@ -88,20 +100,25 @@ const confirmPasswordChecker = (value) => {
 
 for (const input of inputs) {
   input.addEventListener("input", (e) => {
+    // @ts-ignore
     switch (e.target.id) {
       case "pseudo":
+        // @ts-ignore
         pseudoChecker(e.target.value);
         break;
 
       case "email":
+        // @ts-ignore
         emailChecker(e.target.value);
         break;
 
       case "password":
+        // @ts-ignore
         passwordChecker(e.target.value);
         break;
 
       case "confirm":
+        // @ts-ignore
         confirmPasswordChecker(e.target.value);
         break;
 
@@ -111,3 +128,29 @@ for (const input of inputs) {
     }
   });
 }
+
+// @ts-ignore
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (pseudo && email && password && confirmPass) {
+    const date = {
+      pseudo: pseudo,
+      email: email,
+      password: password,
+    };
+    console.log(date);
+    // @ts-ignore
+    progressBar.classList = "";
+    for (const input of inputs) {
+      // @ts-ignore
+      input.value = "";
+    }
+    pseudo = null;
+    email = null;
+    password = null;
+    confirmPass = null;
+  } else {
+    console.log("Formulaire non valide/");
+  }
+});
